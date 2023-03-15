@@ -1,16 +1,15 @@
 <template>
   <div class="home">
     <main>
-      <div class="card-item">
-        <div :v-if="product.availability" class="card-header">EN STOCK !</div>
-        <div class="card-content">
-          {{ product.name }} : {{ product.price }} €
-        </div>
-        <div class="card-subcontent">{{ product.comments }}</div>
-        <div class="card-subcontent">Unité : {{ product.unit }}</div>
-        <div v-if="product.discount > 0" class="card-subcontent">
-          {{ product.discount }} % de réduction !!
-        </div>
+      <div class="card-item-product">
+        <cardComponent
+          :title="product.name + ' - ' + product.price + '€'"
+          :subtitle="product.discount"
+          :content="product.comments"
+          :id="product.id"
+          :availability="product.availability"
+          :btn="false"
+        />
       </div>
     </main>
   </div>
@@ -19,12 +18,13 @@
 <script>
 import { defineComponent } from 'vue'
 import store from '../../store'
+import cardComponent from '../../components/cards/cardComponent'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'ProductView',
-  components: {},
+  components: { cardComponent },
   setup() {
     const route = useRoute()
 

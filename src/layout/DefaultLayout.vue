@@ -1,7 +1,7 @@
 <template>
   <headerComponent />
   <router-view></router-view>
-  <footer>FOOTER</footer>
+  <footer><img src="@/assets/footer-page.png" /></footer>
 </template>
 
 <script>

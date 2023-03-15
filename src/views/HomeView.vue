@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <main>cc</main>
+    <main></main>
   </div>
 </template>
 

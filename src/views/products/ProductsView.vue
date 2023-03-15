@@ -13,6 +13,7 @@
             :content="product.comments"
             :id="product.id"
             :availability="product.availability"
+            :btn="true"
           />
         </div>
       </div>

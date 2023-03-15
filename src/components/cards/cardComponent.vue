@@ -22,7 +22,12 @@
           :v-if="id"
           :to="{ name: 'product', params: { id: id } }"
         >
-          <Button icon="pi pi-eye" label="Détails" severity="primary" />
+          <Button
+            v-if="btn"
+            icon="pi pi-eye"
+            label="Détails"
+            severity="primary"
+          />
         </router-link>
         <Tag
           v-if="availability"
@@ -49,6 +54,7 @@ export default {
     subtitle: Number,
     content: String,
     availability: Boolean,
+    btn: Boolean,
   },
 }
 </script>
