@@ -4963,6 +4963,11 @@ pretty-error@^4.0.0:
     lodash "^4.17.20"
     renderkid "^3.0.0"
 
+primevue@^3.25.0:
+  version "3.25.0"
+  resolved "https://registry.yarnpkg.com/primevue/-/primevue-3.25.0.tgz#277672d1160ceee8480bd19891c891fcc9b11063"
+  integrity sha512-IvidtpFqRsvha8BjwwZWZLQDeCmTDlRnheg8P5QpiJ1bEYEwmIk4iYOQwzchY7Ue/5ewg2VM7BNsCWa6CQoKuA==
+
 process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "https://registry.npmmirror.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
