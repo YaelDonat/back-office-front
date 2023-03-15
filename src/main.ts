@@ -10,6 +10,7 @@ import 'primevue/resources/primevue.css'
 import 'primeicons/primeicons.css'
 // primeVue Component
 import Menubar from 'primevue/menubar'
+import Card from 'primevue/card'
 
 const app = createApp(App)
 app.use(store)
@@ -17,5 +18,6 @@ app.use(router)
 app.use(PrimeVue)
 
 app.component('Menubar', Menubar)
+app.component('Card', Card)
 
 app.mount('#app')

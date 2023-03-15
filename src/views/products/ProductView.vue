@@ -20,27 +20,27 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import store from "../../store";
-import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { defineComponent } from 'vue'
+import store from '../../store'
+import { computed } from 'vue'
+import { useRoute } from 'vue-router'
 
 export default defineComponent({
-  name: "ProductView",
+  name: 'ProductView',
   components: {},
   setup() {
-    const route = useRoute();
+    const route = useRoute()
 
-    const product = computed(() => store.state.currentProduct.data);
+    const product = computed(() => store.state.currentProduct.data)
 
     if (route.params.id) {
-      store.dispatch("getProduct", route.params.id);
+      store.dispatch('getProduct', route.params.id)
     }
     return {
       product,
-    };
+    }
   },
-});
+})
 </script>
 
 <style>

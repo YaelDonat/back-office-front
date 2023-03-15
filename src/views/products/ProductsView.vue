@@ -33,22 +33,22 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import store from "../../store";
-import { computed } from "vue";
+import { defineComponent } from 'vue'
+import store from '../../store'
+import { computed } from 'vue'
 
 export default defineComponent({
-  name: "ProductsView",
+  name: 'ProductsView',
   components: {},
   setup() {
-    const products = computed(() => store.state.products);
-    store.dispatch("getProducts");
+    const products = computed(() => store.state.products)
+    store.dispatch('getProducts')
 
     return {
       products,
-    };
+    }
   },
-});
+})
 </script>
 
 <style>
@@ -78,7 +78,7 @@ export default defineComponent({
 }
 header {
   padding: 1rem;
-  font-family: "Montserrat", "sans-serif";
+  font-family: 'Montserrat', 'sans-serif';
   font-size: 2em;
   text-align: center;
   top: 0;
@@ -101,7 +101,7 @@ main {
 }
 
 .card-item {
-  font-family: "Montserrat", "sans-serif";
+  font-family: 'Montserrat', 'sans-serif';
   color: #fff;
   border: 0.25rem solid #fff;
   text-align: left;
