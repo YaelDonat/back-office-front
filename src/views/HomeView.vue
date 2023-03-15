@@ -1,8 +1,6 @@
 <template>
   <div class="home">
-    <header>
-      <h1 class="title">VENEZ ACHETEZ NOTRE POISCAILLE</h1>
-    </header>
+    <headerComponent />
     <main>
       <div class="list-item">
         <div class="card-item" v-for="item in data" :key="item.id">
@@ -20,17 +18,18 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import { useFetch } from "../api/api";
+import { defineComponent } from 'vue'
+import { useFetch } from '../api/api'
+import headerComponent from '../components/nav/headerComponent'
 
 export default defineComponent({
-  name: "HomeView",
-  components: {},
+  name: 'HomeView',
+  components: { headerComponent },
   setup() {
-    const { data, error } = useFetch("http://127.0.0.1:8000/products");
-    return { data, error };
+    const { data, error } = useFetch('http://127.0.0.1:8000/products')
+    return { data, error }
   },
-});
+})
 </script>
 
 <style>
@@ -51,16 +50,7 @@ export default defineComponent({
 .home {
   overflow-x: hidden;
 }
-header {
-  padding: 1rem;
-  font-family: "Montserrat", "sans-serif";
-  font-size: 2em;
-  text-align: center;
-  top: 0;
-  position: sticky;
-  background: #8bcad9;
-  width: 100%;
-}
+
 main {
   display: flex;
   justify-content: center;
@@ -76,7 +66,7 @@ main {
 }
 
 .card-item {
-  font-family: "Montserrat", "sans-serif";
+  font-family: 'Montserrat', 'sans-serif';
   color: #fff;
   border: 0.25rem solid #fff;
   text-align: left;
