@@ -2,22 +2,18 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProductView from '../views/products/ProductView.vue'
 import ProductsView from '../views/products/ProductsView.vue'
+import DefaultLayout from '../layout/DefaultLayout.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView,
-  },
-  {
-    path: '/products',
-    name: 'products',
-    component: ProductsView,
-  },
-  {
-    path: '/product/:id',
-    name: 'product',
-    component: ProductView,
+    redirect: '/home',
+    component: DefaultLayout,
+    children: [
+      { path: '/home', name: 'home', component: HomeView },
+      { path: '/products', name: 'products', component: ProductsView },
+      { path: '/product/:id', name: 'product', component: ProductView },
+    ],
   },
 ]
 

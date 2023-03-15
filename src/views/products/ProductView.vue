@@ -1,8 +1,5 @@
 <template>
   <div class="home">
-    <header>
-      <h1 class="title">VENEZ ACHETEZ NOTRE POISCAILLE</h1>
-    </header>
     <main>
       <div class="card-item">
         <div :v-if="product.availability" class="card-header">EN STOCK !</div>

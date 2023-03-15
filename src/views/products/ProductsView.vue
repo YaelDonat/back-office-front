@@ -1,12 +1,9 @@
 <template>
   <div class="home">
-    <header>
-      <h1 class="title">VENEZ ACHETEZ NOTRE POISCAILLE</h1>
-    </header>
     <main>
       <div class="list-item">
         <div
-          class="card-item"
+          class="card-item-product"
           v-for="product in products.data"
           :key="product.id"
         >
@@ -14,14 +11,9 @@
             :title="product.name + ' - ' + product.price + '€'"
             :subtitle="product.discount"
             :content="product.comments"
+            :id="product.id"
+            :availability="product.availability"
           />
-          <router-link
-            style="text-decoration: none; color: inherit"
-            v-if="product.id"
-            :to="{ name: 'product', params: { id: product.id } }"
-          >
-            <div type="submit" class="btn-details">Détails</div>
-          </router-link>
         </div>
       </div>
     </main>
@@ -49,27 +41,6 @@ export default defineComponent({
 </script>
 
 <style>
-.card-header {
-  font-size: 2em;
-  font-weight: bold;
-  color: #fff;
-  text-align: center;
-}
-.btn-details {
-  padding: 0.5em;
-  background-color: #fff;
-  border-radius: 5%;
-  max-width: fit-content;
-  color: #000;
-  margin-top: 0.1em;
-}
-.card-content {
-  font-size: 1.5rem;
-}
-
-.card-subcontent {
-}
-
 .home {
   overflow-x: hidden;
 }
@@ -97,18 +68,20 @@ main {
   justify-content: center;
 }
 
-.card-item {
+.card-item-product {
   font-family: 'Montserrat', 'sans-serif';
   color: #fff;
   border: 0.25rem solid #fff;
   text-align: left;
   font-size: 1.5em;
   margin: 1rem;
-  padding: 1rem;
+  padding: 0.2rem;
   min-width: 15%;
   max-width: fit-content;
-  background-color: #8bcad9;
   border-radius: 1rem;
+}
+.p-card-body {
+  box-shadow: 10px 5px 5px #cdcdcd;
 }
 
 .title {

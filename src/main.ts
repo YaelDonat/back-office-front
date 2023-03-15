@@ -13,6 +13,7 @@ import Menubar from 'primevue/menubar'
 import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
+import Tag from 'primevue/tag'
 
 const app = createApp(App)
 app.use(store)
@@ -23,5 +24,6 @@ app.component('Menubar', Menubar)
 app.component('Card', Card)
 app.component('InputText', InputText)
 app.component('Button', Button)
+app.component('Tag', Tag)
 
 app.mount('#app')

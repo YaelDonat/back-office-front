@@ -24,11 +24,17 @@ export default {
         {
           label: 'Home',
           icon: 'pi pi-fw pi-home',
+          to: { name: 'home' },
         },
         {
           label: 'Products',
           icon: 'pi pi-fw pi-box',
           items: [
+            {
+              label: ' View all products',
+              icon: 'pi pi-fw pi-eye',
+              to: { name: 'products' },
+            },
             {
               label: 'Edit',
               icon: 'pi pi-fw pi-pencil',
