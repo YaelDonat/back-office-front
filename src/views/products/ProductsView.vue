@@ -10,15 +10,11 @@
           v-for="product in products.data"
           :key="product.id"
         >
-          <div :v-if="product.availability" class="card-header">EN STOCK !</div>
-          <div class="card-content">
-            {{ product.name }} : {{ product.price }} €
-          </div>
-          <div class="card-subcontent">{{ product.comments }}</div>
-          <div class="card-subcontent">Unité : {{ product.unit }}</div>
-          <div v-if="product.discount > 0" class="card-subcontent">
-            {{ product.discount }} % de réduction !!
-          </div>
+          <cardComponent
+            :title="product.name + ' - ' + product.price + '€'"
+            :subtitle="product.discount"
+            :content="product.comments"
+          />
           <router-link
             style="text-decoration: none; color: inherit"
             v-if="product.id"
@@ -36,10 +32,11 @@
 import { defineComponent } from 'vue'
 import store from '../../store'
 import { computed } from 'vue'
+import cardComponent from '../../components/cards/cardComponent'
 
 export default defineComponent({
   name: 'ProductsView',
-  components: {},
+  components: { cardComponent },
   setup() {
     const products = computed(() => store.state.products)
     store.dispatch('getProducts')

@@ -2,16 +2,13 @@
   <div class="card flex align-items-center justify-content-center">
     <Card style="width: 25em">
       <template #header>
-        <img alt="user header" src="/images/usercard.png" />
+        {{ header }}
       </template>
-      <template #title> Advanced Card </template>
-      <template #subtitle> Card subtitle </template>
+      <template #title> {{ title }} </template>
+      <template #subtitle> {{ subtitle }} </template>
       <template #content>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore
-          sed consequuntur error repudiandae numquam deserunt quisquam repellat
-          libero asperiores earum nam nobis, culpa ratione quam perferendis
-          esse, cupiditate neque quas!
+          {{ content }}
         </p>
       </template>
       <template #footer>
@@ -27,4 +24,13 @@
   </div>
 </template>
 
-<script></script>
+<script>
+export default {
+  props: {
+    header: String,
+    title: String,
+    subtitle: String,
+    content: String,
+  },
+}
+</script>

@@ -11,6 +11,8 @@ import 'primeicons/primeicons.css'
 // primeVue Component
 import Menubar from 'primevue/menubar'
 import Card from 'primevue/card'
+import InputText from 'primevue/inputtext'
+import Button from 'primevue/button'
 
 const app = createApp(App)
 app.use(store)
@@ -19,5 +21,7 @@ app.use(PrimeVue)
 
 app.component('Menubar', Menubar)
 app.component('Card', Card)
+app.component('InputText', InputText)
+app.component('Button', Button)
 
 app.mount('#app')

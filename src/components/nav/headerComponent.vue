@@ -26,28 +26,6 @@ export default {
           icon: 'pi pi-fw pi-home',
         },
         {
-          label: 'Edit',
-          icon: 'pi pi-fw pi-pencil',
-          items: [
-            {
-              label: 'Left',
-              icon: 'pi pi-fw pi-align-left',
-            },
-            {
-              label: 'Right',
-              icon: 'pi pi-fw pi-align-right',
-            },
-            {
-              label: 'Center',
-              icon: 'pi pi-fw pi-align-center',
-            },
-            {
-              label: 'Justify',
-              icon: 'pi pi-fw pi-align-justify',
-            },
-          ],
-        },
-        {
           label: 'Products',
           icon: 'pi pi-fw pi-box',
           items: [
