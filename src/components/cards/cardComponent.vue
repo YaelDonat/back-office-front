@@ -58,3 +58,9 @@ export default {
   },
 }
 </script>
+
+<style>
+.p-card {
+  border-radius: none;
+}
+</style>
