@@ -10,7 +10,6 @@
         />
       </template>
       <template #end>
-        <!-- <InputText placeholder="Search" type="text" /> -->
         <autocompleteComponent :items="products.data" :names="names" />
       </template>
     </Menubar>
@@ -44,16 +43,7 @@ export default {
             {
               label: 'Edit',
               icon: 'pi pi-fw pi-pencil',
-              items: [
-                {
-                  label: 'Save',
-                  icon: 'pi pi-fw pi-calendar-plus',
-                },
-                {
-                  label: 'Delete',
-                  icon: 'pi pi-fw pi-calendar-minus',
-                },
-              ],
+              to: { name: 'products-edit' },
             },
           ],
         },

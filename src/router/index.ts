@@ -14,6 +14,11 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       { path: '/home', name: 'home', component: HomeView },
       { path: '/products', name: 'products', component: ProductsView },
+      {
+        path: '/products/edit',
+        name: 'products-edit',
+        component: ProductsView,
+      },
       { path: '/product/:id', name: 'product', component: ProductView },
     ],
   },

@@ -1,5 +1,6 @@
 <template>
   <router-view></router-view>
+  <footer><img class="footer-img" src="@/assets/footer-page.png" /></footer>
 </template>
 
 <script>

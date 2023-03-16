@@ -72,7 +72,6 @@ main {
 .card-item-product {
   font-family: 'Montserrat', 'sans-serif';
   color: #fff;
-  border: 0.25rem solid #fff;
   text-align: left;
   font-size: 1.5em;
   margin: 1rem;

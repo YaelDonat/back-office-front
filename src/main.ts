@@ -15,6 +15,8 @@ import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import Tag from 'primevue/tag'
 import AutoComplete from 'primevue/autocomplete'
+import Inplace from 'primevue/inplace'
+import Dialog from 'primevue/dialog'
 
 const app = createApp(App)
 app.use(store)
@@ -27,5 +29,7 @@ app.component('InputText', InputText)
 app.component('Button', Button)
 app.component('Tag', Tag)
 app.component('AutoComplete', AutoComplete)
+app.component('Inplace', Inplace)
+app.component('Dialog', Dialog)
 
 app.mount('#app')

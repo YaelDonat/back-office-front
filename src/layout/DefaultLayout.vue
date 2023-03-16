@@ -18,5 +18,12 @@ export default defineComponent({
 .footer-img {
   background-size: cover;
   width: 100%;
+  bottom: 0;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  z-index: -1;
 }
 </style>

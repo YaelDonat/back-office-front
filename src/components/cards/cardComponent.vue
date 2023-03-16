@@ -1,9 +1,7 @@
-<template>
-  <div class="card flex align-items-center justify-content-center">
+<template :key="pathname">
+  <div class="card">
     <Card style="width: 25em">
-      <template #header>
-        {{ header }}
-      </template>
+      <template #header> {{ header }}</template>
       <template #title> {{ title }} </template>
       <template #subtitle v-if="subtitle > 0">
         {{ subtitle }} % de réduction sur cet article !!
@@ -19,7 +17,7 @@
       <template #footer>
         <router-link
           style="text-decoration: none; color: inherit"
-          :v-if="id"
+          v-if="id && pathname === 'products'"
           :to="{ name: 'product', params: { id: id } }"
         >
           <Button
@@ -27,6 +25,24 @@
             icon="pi pi-eye"
             label="Détails"
             severity="primary"
+          />
+        </router-link>
+        <Button
+          v-if="pathname === 'products-edit'"
+          icon="pi pi-pencil"
+          label="edit"
+          severity="primary"
+          @click="openDialog()"
+        />
+        <router-link
+          style="text-decoration: none; color: inherit"
+          v-if="id && pathname === 'products'"
+          :to="{ name: 'products-edit' }"
+        >
+          <Button
+            icon="pi pi-pencil"
+            severity="primary"
+            style="margin-left: 0.5em"
           />
         </router-link>
         <Tag
@@ -42,20 +58,47 @@
         </Tag>
       </template>
     </Card>
+    <!-- DIALOG -->
+    <DialogComponent :visible="visible" :onClose="closeDialog" />
+    <!-- DIALOG -->
   </div>
 </template>
 
-<script>
-export default {
-  props: {
-    id: Number,
-    header: String,
-    title: String,
-    subtitle: Number,
-    content: String,
-    availability: Boolean,
-    btn: Boolean,
-  },
+<script setup>
+import { useRoute, useRouter } from 'vue-router'
+import { ref, watch, defineProps } from 'vue'
+import DialogComponent from '../Dialog/DialogComponent'
+
+const props = defineProps({
+  id: { type: Number },
+  header: { type: String },
+  title: { type: String },
+  subtitle: { type: Number },
+  content: { type: String },
+  availability: { type: Boolean },
+  btn: { type: Boolean },
+})
+const route = useRoute()
+const router = useRouter()
+const visible = ref(false)
+
+let pathname = ref(route.name)
+
+router.afterEach((to, from) => {
+  pathname.value = to.name
+})
+
+watch(pathname, (newValue, oldValue) => {
+  console.log(newValue)
+  pathname.value = newValue
+})
+
+function openDialog() {
+  visible.value = true
+}
+
+function closeDialog() {
+  visible.value = false
 }
 </script>
 
