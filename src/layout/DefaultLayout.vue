@@ -1,7 +1,7 @@
 <template>
   <headerComponent />
   <router-view></router-view>
-  <footer><img src="@/assets/footer-page.png" /></footer>
+  <footer><img class="footer-img" src="@/assets/footer-page.png" /></footer>
 </template>
 
 <script>
@@ -13,3 +13,10 @@ export default defineComponent({
   components: { headerComponent },
 })
 </script>
+
+<style>
+.footer-img {
+  background-size: cover;
+  width: 100%;
+}
+</style>
