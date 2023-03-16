@@ -10,14 +10,20 @@
         />
       </template>
       <template #end>
-        <InputText placeholder="Search" type="text" />
+        <!-- <InputText placeholder="Search" type="text" /> -->
+        <autocompleteComponent :items="products.data" :names="names" />
       </template>
     </Menubar>
   </div>
 </template>
 
 <script>
+import autocompleteComponent from '../autocomplete/autocompleteComponent'
+import store from '../../store'
+import { computed } from 'vue'
+
 export default {
+  components: { autocompleteComponent },
   data() {
     return {
       items: [
@@ -60,6 +66,16 @@ export default {
           icon: 'pi pi-fw pi-power-off',
         },
       ],
+    }
+  },
+  // setup
+  setup() {
+    const products = computed(() => store.state.products)
+    const names = products.value.data.map(res => res.name)
+    store.dispatch('getProducts')
+    return {
+      products,
+      names,
     }
   },
 }

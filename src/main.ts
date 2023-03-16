@@ -14,7 +14,7 @@ import Card from 'primevue/card'
 import InputText from 'primevue/inputtext'
 import Button from 'primevue/button'
 import Tag from 'primevue/tag'
-import Carousel from 'primevue/carousel'
+import AutoComplete from 'primevue/autocomplete'
 
 const app = createApp(App)
 app.use(store)
@@ -26,6 +26,6 @@ app.component('Card', Card)
 app.component('InputText', InputText)
 app.component('Button', Button)
 app.component('Tag', Tag)
-app.component('Carousel', Carousel)
+app.component('AutoComplete', AutoComplete)
 
 app.mount('#app')
