@@ -1,7 +1,14 @@
 <template>
   <div class="home">
     <main>
-      <div class="list-item">
+      <Skeleton
+        v-if="products.loading"
+        width="50rem"
+        height="40rem"
+        class="mb-2"
+        style="margin-top: 2rem"
+      ></Skeleton>
+      <div v-else class="list-item">
         <div
           class="card-item-product"
           v-for="product in products.data"
@@ -14,6 +21,7 @@
             :id="product.id"
             :availability="product.availability"
             :btn="true"
+            :product="product"
           />
         </div>
       </div>

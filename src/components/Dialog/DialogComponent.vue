@@ -3,30 +3,112 @@
     :visible="visible"
     @update:visible="value => $emit('close', value)"
     modal
-    header="Header"
+    header="Edit form"
     :style="{ width: '50vw' }"
     @hide="onClose"
   >
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
-    </p>
+    <!-- Content -->
+    <div class="form">
+      <div class="form-input">
+        <label class="form-label">Name</label>
+        <InputText
+          v-model="localProduct.name"
+          id="name"
+          type="text"
+          class="w-full"
+        />
+      </div>
+      <div class="form-input">
+        <label class="form-label">Category</label>
+        <InputText
+          id="category"
+          type="text"
+          class="w-full"
+          v-model="localProduct.category"
+        />
+      </div>
+      <div class="form-input">
+        <label class="form-label">Price</label>
+        <InputNumber
+          v-model="localProduct.price"
+          inputId="currencyFr"
+          :minFractionDigits="2"
+          :maxFractionDigits="5"
+          mode="currency"
+          currency="EUR"
+          locale="fr-FR"
+          id="price"
+          type="text"
+          class="w-full"
+        />
+      </div>
+      <div class="form-input">
+        <label class="form-label">Unit</label>
+        <InputText
+          id="unit"
+          type="text"
+          class="w-full"
+          v-model="localProduct.unit"
+        />
+      </div>
+      <div class="form-input">
+        <label class="form-label">Availability</label>
+        <InputText
+          id="availability"
+          type="text"
+          class="w-full"
+          v-model="localProduct.availability"
+        />
+      </div>
+      <div class="form-input">
+        <label class="form-label">Sale</label>
+        <InputText
+          id="sale"
+          type="text"
+          class="w-full"
+          v-model="localProduct.sale"
+        />
+      </div>
+      <div class="form-input">
+        <label class="form-label">Discount</label>
+        <InputText
+          id="discount"
+          type="text"
+          class="w-full"
+          v-model="localProduct.discount"
+        />
+      </div>
+      <div class="form-input">
+        <label class="form-label">Comments</label>
+        <InputText
+          id="comments"
+          type="text"
+          class="w-full"
+          v-model="localProduct.comments"
+        />
+      </div>
+      <div class="form-input">
+        <label class="form-label">Owner</label>
+        <InputText
+          id="owner"
+          type="text"
+          class="w-full"
+          v-model="localProduct.owner"
+        />
+      </div>
+    </div>
+    <!-- End Content -->
     <template #footer>
       <Button
-        label="No"
+        label="Cancel"
         icon="pi pi-times"
-        @click="$emit('update:visible', false)"
+        @click="$emit('close', false)"
         text
       />
       <Button
-        label="Yes"
+        label="Save"
         icon="pi pi-check"
-        @click="$emit('update:visible', false)"
+        @click="$emit('close', false)"
         autofocus
       />
     </template>
@@ -34,7 +116,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 
 const props = defineProps({
   visible: {
@@ -44,11 +126,30 @@ const props = defineProps({
   onClose: {
     type: Function,
   },
+  product: {
+    type: Object,
+    required: true,
+  },
 })
-
-let show = ref(props.visible)
-
-const closeDialog = state => {
-  show.value = state
-}
+const localProduct = ref(props.product)
 </script>
+
+<style>
+.form-input {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  margin-bottom: 0.5rem;
+}
+.form-label {
+  display: inline-block;
+  width: 100px;
+  margin-right: 1em;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+</style>

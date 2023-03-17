@@ -59,7 +59,11 @@
       </template>
     </Card>
     <!-- DIALOG -->
-    <DialogComponent :visible="visible" :onClose="closeDialog" />
+    <DialogComponent
+      :visible="visible"
+      :onClose="closeDialog"
+      :product="product"
+    />
     <!-- DIALOG -->
   </div>
 </template>
@@ -77,6 +81,7 @@ const props = defineProps({
   content: { type: String },
   availability: { type: Boolean },
   btn: { type: Boolean },
+  product: { type: Object },
 })
 const route = useRoute()
 const router = useRouter()

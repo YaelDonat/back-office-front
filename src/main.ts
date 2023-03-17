@@ -17,6 +17,8 @@ import Tag from 'primevue/tag'
 import AutoComplete from 'primevue/autocomplete'
 import Inplace from 'primevue/inplace'
 import Dialog from 'primevue/dialog'
+import Skeleton from 'primevue/skeleton'
+import InputNumber from 'primevue/inputnumber'
 
 const app = createApp(App)
 app.use(store)
@@ -26,10 +28,12 @@ app.use(PrimeVue)
 app.component('Menubar', Menubar)
 app.component('Card', Card)
 app.component('InputText', InputText)
+app.component('InputNumber', InputNumber)
 app.component('Button', Button)
 app.component('Tag', Tag)
 app.component('AutoComplete', AutoComplete)
 app.component('Inplace', Inplace)
 app.component('Dialog', Dialog)
+app.component('Skeleton', Skeleton)
 
 app.mount('#app')
