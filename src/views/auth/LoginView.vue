@@ -16,8 +16,17 @@
   </div>
 </template>
 
-<script setup>
-console.log('login')
+<script>
+export default defineComponent({
+  name: 'ProductsView',
+  components: {},
+  setup() {
+    return {
+      accessToken,
+      refreshToken,
+    }
+  },
+})
 </script>
 
 <style>
