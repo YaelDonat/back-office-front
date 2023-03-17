@@ -15,6 +15,10 @@ export default defineComponent({
 
 <style>
 .home {
+  overflow: hidden;
+}
+
+body {
   overflow-x: hidden;
 }
 

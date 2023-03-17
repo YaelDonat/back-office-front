@@ -24,6 +24,9 @@ export default createStore({
     products: state => {
       return state.products
     },
+    product: state => {
+      return state.currentProduct
+    },
   },
   mutations: {
     setProducts: (state, products) => {

@@ -72,6 +72,7 @@
 import { useRoute, useRouter } from 'vue-router'
 import { ref, watch, defineProps } from 'vue'
 import DialogComponent from '../Dialog/DialogComponent'
+import store from '../../store'
 
 const props = defineProps({
   id: { type: Number },
@@ -94,9 +95,18 @@ router.afterEach((to, from) => {
 })
 
 watch(pathname, (newValue, oldValue) => {
-  console.log(newValue)
   pathname.value = newValue
 })
+
+// Observer le changement de la propriété 'id' de l'objet route.params
+watch(
+  () => route.params.id,
+  (newVal, oldVal) => {
+    if (newVal !== oldVal) {
+      store.dispatch('getProduct', newVal)
+    }
+  }
+)
 
 function openDialog() {
   visible.value = true
