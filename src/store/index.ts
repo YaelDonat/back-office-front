@@ -7,10 +7,11 @@ export default createStore({
       data: {
         username: null,
         password: null,
-        //     name: sessionStorage.getItem('name'),
-        //     email: sessionStorage.getItem('email'),
       },
-      token: 1, //sessionStorage.getItem("TOKEN"),
+      token: {
+        accessToken: localStorage.getItem('accessToken'),
+        refreshToken: localStorage.getItem('refreshToken'),
+      }, //sessionStorage.getItem("TOKEN"),
     },
     products: {
       data: [],
@@ -20,6 +21,7 @@ export default createStore({
       data: {},
       loading: false,
     },
+    errorMessage: null,
   },
   getters: {
     products: state => {
@@ -42,11 +44,22 @@ export default createStore({
     setCurrentProductLoading: (state, loading) => {
       state.currentProduct.loading = loading
     },
+    setErrorMessage: (state, errorMessage) => {
+      state.errorMessage = errorMessage
+    },
+    setAccessToken: (state, token) => {
+      state.user.token.accessToken = token.access
+      localStorage.setItem('accessToken', token)
+    },
+    setRefreshToken: (state, token) => {
+      state.user.token.refreshToken = token.refresh
+      localStorage.setItem('refreshToken', token)
+    },
   },
   actions: {
     getProducts({ commit }, { url = null } = {}) {
       commit('setProductsLoading', true)
-      url = url || 'http://127.0.0.1:8000/products'
+      url = url || 'http://127.0.0.1:8000/infoproducts/'
       const { data, error } = useFetch(url)
       commit('setProducts', data)
       commit('setProductsLoading', false)
@@ -61,7 +74,7 @@ export default createStore({
       return { data, error }
     },
     async login({ commit }, user) {
-      const response = await fetch('https://monserveur.com/login', {
+      const response = await fetch('http://127.0.0.1:8000/api/token/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -75,8 +88,9 @@ export default createStore({
       if (response.ok) {
         // Récupérer le token JWT et le stocker dans le state Vuex
         const data = await response.json()
-        const token = data.token
-        commit('setToken', token)
+        commit('setAccessToken', data.access)
+        commit('setRefreshToken', data.refresh)
+        return { data }
       } else {
         // Traiter l'erreur de connexion
         commit('setErrorMessage', 'Erreur de connexion')

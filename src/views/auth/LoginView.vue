@@ -4,14 +4,29 @@
       <!-- username -->
       <div class="login-input">
         <label>Username</label>
-        <InputText id="username" type="text" class="w-full" />
+        <InputText
+          id="username"
+          type="text"
+          class="w-full"
+          v-model="user.username"
+        />
       </div>
       <!-- pwd -->
       <div class="login-input">
         <label>Password</label>
-        <InputText id="password" type="password" class="w-full" />
+        <InputText
+          id="password"
+          type="password"
+          class="w-full"
+          v-model="user.password"
+        />
       </div>
-      <Button label="Login" icon="pi pi-user" class="w-10rem"></Button>
+      <Button
+        label="Login"
+        icon="pi pi-user"
+        class="w-10rem"
+        type="submit"
+      ></Button>
     </div>
   </form>
 </template>
@@ -23,17 +38,22 @@ import store from '../../store'
 
 const router = useRouter()
 const errorMessage = ref('')
-const user = { username: null, password: null }
+const user = {
+  username: '',
+  password: '',
+}
 
 function login(event) {
   event.preventDefault()
+
   store
     .dispatch('login', user)
     .then(() => {
       router.push({ name: 'home' })
     })
     .catch(err => {
-      errorMessage.value = err.response.data.error
+      console.log(err)
+      // errorMessage.value = err.response.data.error
     })
 }
 </script>
