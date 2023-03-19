@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-card">
+  <form class="auth-card" @submit="login">
     <div class="login-card">
       <!-- username -->
       <div class="login-input">
@@ -13,11 +13,29 @@
       </div>
       <Button label="Login" icon="pi pi-user" class="w-10rem"></Button>
     </div>
-  </div>
+  </form>
 </template>
 
 <script setup>
-console.log('login')
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import store from '../../store'
+
+const router = useRouter()
+const errorMessage = ref('')
+const user = { username: null, password: null }
+
+function login(event) {
+  event.preventDefault()
+  store
+    .dispatch('login', user)
+    .then(() => {
+      router.push({ name: 'home' })
+    })
+    .catch(err => {
+      errorMessage.value = err.response.data.error
+    })
+}
 </script>
 
 <style>

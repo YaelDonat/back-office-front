@@ -3,14 +3,15 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    // user: {
-    //   data: {
-    //     id: sessionStorage.getItem('id'),
-    //     name: sessionStorage.getItem('name'),
-    //     email: sessionStorage.getItem('email'),
-    //   },
-    //   token: 1, //sessionStorage.getItem("TOKEN"),
-    // },
+    user: {
+      data: {
+        username: null,
+        password: null,
+        //     name: sessionStorage.getItem('name'),
+        //     email: sessionStorage.getItem('email'),
+      },
+      token: 1, //sessionStorage.getItem("TOKEN"),
+    },
     products: {
       data: [],
       loading: false,
@@ -58,6 +59,28 @@ export default createStore({
       commit('setCurrentProduct', data)
       commit('setCurrentProductLoading', false)
       return { data, error }
+    },
+    async login({ commit }, user) {
+      const response = await fetch('https://monserveur.com/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: user.username,
+          password: user.password,
+        }),
+      })
+
+      if (response.ok) {
+        // Récupérer le token JWT et le stocker dans le state Vuex
+        const data = await response.json()
+        const token = data.token
+        commit('setToken', token)
+      } else {
+        // Traiter l'erreur de connexion
+        commit('setErrorMessage', 'Erreur de connexion')
+      }
     },
   },
   modules: {},
