@@ -11,7 +11,7 @@ export default createStore({
       token: {
         accessToken: localStorage.getItem('accessToken'),
         refreshToken: localStorage.getItem('refreshToken'),
-      }, //sessionStorage.getItem("TOKEN"),
+      },
     },
     products: {
       data: [],
@@ -55,6 +55,12 @@ export default createStore({
       state.user.token.refreshToken = token.refresh
       localStorage.setItem('refreshToken', token)
     },
+    logout: state => {
+      state.user.token.accessToken = null
+      state.user.token.refreshToken = null
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('refreshToken')
+    },
   },
   actions: {
     getProducts({ commit }, { url = null } = {}) {
@@ -97,6 +103,9 @@ export default createStore({
         // Traiter l'erreur de connexion
         commit('setErrorMessage', 'Erreur de connexion')
       }
+    },
+    logout({ commit }) {
+      commit('logout')
     },
   },
   modules: {},

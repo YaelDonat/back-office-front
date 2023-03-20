@@ -49,11 +49,11 @@ function login(event) {
   store
     .dispatch('login', user)
     .then(() => {
-      router.push({ name: 'home' })
+      router.go({ name: 'home' })
     })
     .catch(err => {
       console.log(err)
-      // errorMessage.value = err.response.data.error
+      errorMessage.value = err.response.data.error
     })
 }
 </script>

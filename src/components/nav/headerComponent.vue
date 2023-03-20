@@ -20,7 +20,9 @@
 import autocompleteComponent from '../autocomplete/autocompleteComponent'
 import store from '../../store'
 import { computed, ref } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const items = ref([
   {
     label: 'Home',
@@ -50,6 +52,7 @@ const items = ref([
   {
     label: 'Logout',
     icon: 'pi pi-fw pi-power-off',
+    command: logout,
   },
 ])
 
@@ -60,4 +63,10 @@ const names = computed(() => {
     : []
 })
 store.dispatch('getProducts')
+function logout() {
+  console.log('coucou')
+  store.dispatch('logout').then(() => {
+    router.push({ name: 'login' })
+  })
+}
 </script>
