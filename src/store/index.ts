@@ -68,7 +68,9 @@ export default createStore({
 
     getProduct({ commit }, id) {
       commit('setCurrentProductLoading', true)
-      const { data, error } = useFetch(`http://127.0.0.1:8000/product/${id}`)
+      const { data, error } = useFetch(
+        `http://127.0.0.1:8000/infoproduct/${id}/`
+      )
       commit('setCurrentProduct', data)
       commit('setCurrentProductLoading', false)
       return { data, error }
