@@ -18,7 +18,7 @@
             :title="product.name + ' - ' + product.price + '€'"
             :subtitle="product.discount"
             :content="product.comments"
-            :id="product.id"
+            :id="product.tig_id"
             :availability="product.availability"
             :btn="true"
             :product="product"

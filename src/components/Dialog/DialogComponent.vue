@@ -8,7 +8,7 @@
     @hide="onClose"
   >
     <!-- Content -->
-    <div class="form">
+    <form id="myForm" @submit="checkForm()">
       <div class="form-input">
         <label class="form-label">Name</label>
         <InputText
@@ -16,6 +16,7 @@
           id="name"
           type="text"
           class="w-full"
+          required
         />
       </div>
       <div class="form-input">
@@ -25,6 +26,7 @@
           type="text"
           class="w-full"
           v-model="localProduct.category"
+          required
         />
       </div>
       <div class="form-input">
@@ -40,6 +42,7 @@
           id="price"
           type="text"
           class="w-full"
+          required
         />
       </div>
       <div class="form-input">
@@ -49,6 +52,7 @@
           type="text"
           class="w-full"
           v-model="localProduct.unit"
+          required
         />
       </div>
       <div class="form-input">
@@ -58,6 +62,7 @@
           type="text"
           class="w-full"
           v-model="localProduct.availability"
+          required
         />
       </div>
       <div class="form-input">
@@ -67,6 +72,7 @@
           type="text"
           class="w-full"
           v-model="localProduct.sale"
+          required
         />
       </div>
       <div class="form-input">
@@ -76,6 +82,7 @@
           type="text"
           class="w-full"
           v-model="localProduct.discount"
+          required
         />
       </div>
       <div class="form-input">
@@ -96,7 +103,7 @@
           v-model="localProduct.owner"
         />
       </div>
-    </div>
+    </form>
     <!-- End Content -->
     <template #footer>
       <Button
@@ -108,7 +115,11 @@
       <Button
         label="Save"
         icon="pi pi-check"
-        @click="$emit('close', false)"
+        @click="
+          () => {
+            onSubmit()
+          }
+        "
         autofocus
       />
     </template>
@@ -118,6 +129,9 @@
 <script setup>
 import { defineProps, ref } from 'vue'
 
+import { useStore } from 'vuex'
+
+const form = document.getElementById('myForm')
 const props = defineProps({
   visible: {
     type: Boolean,
@@ -131,7 +145,57 @@ const props = defineProps({
     required: true,
   },
 })
+
 const localProduct = ref(props.product)
+const store = useStore()
+
+function checkForm(e) {
+  this.errors = []
+
+  if (!localProduct.value.name) {
+    this.errors.push('Name required.')
+  }
+  if (!this.email) {
+    this.errors.push('Email required.')
+  } else if (!this.validEmail(this.email)) {
+    this.errors.push('Valid email required.')
+  }
+
+  if (!this.errors.length) {
+    return true
+  }
+}
+
+async function onSubmit() {
+  try {
+    const payload = {
+      id: props.product.id,
+      product: localProduct.value,
+    }
+
+    await store.dispatch('saveProduct', payload)
+    console.log('Product saved successfully!')
+    this.visible = false
+
+    // eslint-disable-next-line no-undef
+
+    // eslint-disable-next-line no-undef
+    //$emit('close', true) // close the dialog after successfully saving the product
+  } catch (error) {
+    console.log('Error saving product:', error)
+    console.log(props.product.id)
+  }
+}
+function isFormValid() {
+  const requiredFields = form.value.querySelectorAll('required')
+  console.log(requiredFields)
+  for (let i = 0; i < requiredFields.length; i++) {
+    if (!requiredFields[i].value) {
+      return false
+    }
+  }
+  return true
+}
 </script>
 
 <style>

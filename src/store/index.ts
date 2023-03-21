@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useFetch } from '@/api/api'
 import { createStore } from 'vuex'
 
@@ -32,6 +33,9 @@ export default createStore({
     },
   },
   mutations: {
+    saveProducts: (state, product) => {
+      state.currentProduct = product
+    },
     setProducts: (state, products) => {
       state.products.data = products
     },
@@ -81,6 +85,39 @@ export default createStore({
       commit('setCurrentProductLoading', false)
       return { data, error }
     },
+
+    saveProduct({ commit }, { id, product }) {
+      // eslint-disable-next-line no-async-promise-executor
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:8000/infoproduct/${id}/`,
+            {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.state.user.token.accessToken}`
+              },
+              body: JSON.stringify(product),
+            }
+          )
+
+          if (response.ok) {
+            // Update the product information in the store
+            const data = await response.json()
+            commit('setCurrentProduct', data)
+            resolve({ data })
+          } else {
+            // Handle the error
+            const error = await response.json()
+            reject(error)
+          }
+        } catch (error) {
+          reject(error)
+        }
+      })
+    },
+
     async login({ commit }, user) {
       const response = await fetch('http://127.0.0.1:8000/api/token/', {
         method: 'POST',
