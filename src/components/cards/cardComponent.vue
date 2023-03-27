@@ -78,7 +78,7 @@ const props = defineProps({
   id: { type: Number },
   header: { type: String },
   title: { type: String },
-  subtitle: { type: Number },
+  subtitle: { type: String },
   content: { type: String },
   availability: { type: Boolean },
   btn: { type: Boolean },

@@ -8,16 +8,19 @@
     @hide="onClose"
   >
     <!-- Content -->
-    <form id="myForm" @submit="checkForm()">
+    <form id="myForm" @submit="onSubmit">
       <div class="form-input">
         <label class="form-label">Name</label>
         <InputText
-          v-model="localProduct.name"
+          v-model="name"
           id="name"
           type="text"
           class="w-full"
           required
         />
+        <small class="p-error" id="name-error">{{
+          nameErrorMessage || '&nbsp;'
+        }}</small>
       </div>
       <div class="form-input">
         <label class="form-label">Category</label>
@@ -32,7 +35,7 @@
       <div class="form-input">
         <label class="form-label">Price</label>
         <InputNumber
-          v-model="localProduct.price"
+          v-model="price"
           inputId="currencyFr"
           :minFractionDigits="2"
           :maxFractionDigits="5"
@@ -44,6 +47,9 @@
           class="w-full"
           required
         />
+        <small class="p-error" id="name-error">{{
+          priceErrorMessage || '&nbsp;'
+        }}</small>
       </div>
       <div class="form-input">
         <label class="form-label">Unit</label>
@@ -128,10 +134,10 @@
 
 <script setup>
 import { defineProps, ref } from 'vue'
+import { useToast } from 'primevue/usetoast'
+import { useField, useForm } from 'vee-validate'
+import store from '../../store'
 
-import { useStore } from 'vuex'
-
-const form = document.getElementById('myForm')
 const props = defineProps({
   visible: {
     type: Boolean,
@@ -146,56 +152,66 @@ const props = defineProps({
   },
 })
 
-const localProduct = ref(props.product)
-const store = useStore()
+const localProduct = ref(props.product || {})
 
-function checkForm(e) {
-  this.errors = []
+//Vee VALIDATE
+const { handleSubmit, resetForm } = useForm()
 
-  if (!localProduct.value.name) {
-    this.errors.push('Name required.')
-  }
-  if (!this.email) {
-    this.errors.push('Email required.')
-  } else if (!this.validEmail(this.email)) {
-    this.errors.push('Valid email required.')
-  }
+const { value: name, errorMessage: nameErrorMessage } = useField(
+  'name',
+  validateName,
+  { initialValue: localProduct.value.name }
+)
 
-  if (!this.errors.length) {
-    return true
-  }
-}
+const { value: price, errorMessage: priceErrorMessage } = useField(
+  'price',
+  validatePrice,
+  { initialValue: localProduct.value.price }
+)
 
-async function onSubmit() {
-  try {
-    const payload = {
-      id: props.product.id,
-      product: localProduct.value,
-    }
-
-    await store.dispatch('saveProduct', payload)
-    console.log('Product saved successfully!')
-    this.visible = false
-
-    // eslint-disable-next-line no-undef
-
-    // eslint-disable-next-line no-undef
-    //$emit('close', true) // close the dialog after successfully saving the product
-  } catch (error) {
-    console.log('Error saving product:', error)
-    console.log(props.product.id)
-  }
-}
-function isFormValid() {
-  const requiredFields = form.value.querySelectorAll('required')
-  console.log(requiredFields)
-  for (let i = 0; i < requiredFields.length; i++) {
-    if (!requiredFields[i].value) {
-      return false
-    }
+function validateName(value) {
+  if (!value) {
+    return 'Name - Surname is required.'
   }
   return true
 }
+
+function validatePrice(value) {
+  if (!value) {
+    return 'Price is required.'
+  } else if (isNaN(value)) {
+    return 'Price must be a number.'
+  }
+
+  return true
+}
+
+const toast = useToast()
+const onSubmit = handleSubmit(values => {
+  if (values.name && values.name.length > 0 && values.price != null) {
+    toast.add({
+      severity: 'info',
+      summary: 'Form Submitted',
+      detail: `${values.name} - ${values.price}`,
+      life: 3000,
+    })
+    try {
+      const payload = {
+        id: props.product.id,
+        product: localProduct.value,
+      }
+
+      store.dispatch('saveProduct', payload)
+      console.log('Product saved successfully!')
+      this.visible = false
+    } catch (error) {
+      console.log('Error saving product:', error)
+      console.log(props.product.id)
+    }
+  }
+  resetForm()
+})
+//Vee VALIDATE
 </script>
 
 <style>
@@ -215,5 +231,9 @@ function isFormValid() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.p-error {
+  color: red;
+  font-weight: bold;
 }
 </style>
