@@ -1,5 +1,6 @@
 // fetch.js
 import { ref, isRef, unref, watchEffect } from 'vue'
+import store from '../store'
 
 export function useFetch(url: string) {
   const data = ref(null)
@@ -16,7 +17,23 @@ export function useFetch(url: string) {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
     })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          store.dispatch('refreshAccessToken').then(() => {
+            store.commit('setProducts', data)
+            store.commit('setProductsLoading', false)
+            console.log('ca a été rafraichi')
+            useFetch(url)
+            location.reload()
+          })
+
+          console.log(error)
+        }
+        store.commit('setProducts', data)
+        store.commit('setProductsLoading', false)
+        console.log('test')
+        return res.json()
+      })
       .then(json => (data.value = json))
       .catch(err => (error.value = err))
   }

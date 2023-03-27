@@ -99,14 +99,14 @@ watch(pathname, (newValue, oldValue) => {
 })
 
 // Observer le changement de la propriété 'id' de l'objet route.params
-/*watch(
+watch(
   () => route.params.id,
   (newVal, oldVal) => {
-    if (newVal !== oldVal) {
+    if (newVal !== oldVal && newVal) {
       store.dispatch('getProduct', newVal)
     }
   }
-)*/
+)
 
 function openDialog() {
   visible.value = true

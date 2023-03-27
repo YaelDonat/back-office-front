@@ -2,7 +2,7 @@
   <div class="home">
     <main>
       <div class="card-item-product">
-        <cardComponent
+        <cardComponentDetail
           v-if="product"
           :title="product.name + ' - ' + product.price + '€'"
           :subtitle="product.discount"
@@ -19,7 +19,7 @@
 
 <script setup>
 import store from '../../store'
-import cardComponent from '../../components/cards/cardComponent'
+import cardComponentDetail from '../../components/cards/cardComponentDetail'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 
@@ -28,7 +28,7 @@ const product = computed(() => store.state.currentProduct.data)
 if (route.params.id) {
   store.dispatch('getProduct', route.params.id)
 }
-console.log(product)
+console.log('produit :')
 </script>
 
 <style>

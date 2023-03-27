@@ -71,8 +71,8 @@ export default createStore({
       commit('setProductsLoading', true)
       url = url || 'http://127.0.0.1:8000/infoproducts/'
       const { data, error } = useFetch(url)
-      commit('setProducts', data)
-      commit('setProductsLoading', false)
+      //commit('setProducts', data)
+      //commit('setProductsLoading', false)
       return { data, error }
     },
 
@@ -81,8 +81,9 @@ export default createStore({
       const { data, error } = useFetch(
         `http://127.0.0.1:8000/infoproduct/${id}/`
       )
-      commit('setCurrentProduct', data)
-      commit('setCurrentProductLoading', false)
+      
+      //commit('setCurrentProduct', data)
+      //commit('setCurrentProductLoading', false)
       return { data, error }
     },
 
@@ -96,7 +97,7 @@ export default createStore({
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.state.user.token.accessToken}`
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
               },
               body: JSON.stringify(product),
             }
@@ -105,11 +106,23 @@ export default createStore({
           if (response.ok) {
             // Update the product information in the store
             const data = await response.json()
+            console.log('Product saved successfully!')
             commit('setCurrentProduct', data)
             resolve({ data })
           } else {
             // Handle the error
+            
+            this.dispatch('refreshAccessToken').then(() => {
+              console.log('ca a été rafraichi')
+              this.dispatch('saveProduct', {id, product})
+              
+            })
+            .catch(err => {
+              commit('logout')
+              
+            })
             const error = await response.json()
+            
             reject(error)
           }
         } catch (error) {
@@ -117,7 +130,7 @@ export default createStore({
         }
       })
     },
-
+    
     async login({ commit }, user) {
       const response = await fetch('http://127.0.0.1:8000/api/token/', {
         method: 'POST',
@@ -141,9 +154,44 @@ export default createStore({
         commit('setErrorMessage', 'Erreur de connexion')
       }
     },
+    
+    async refreshAccessToken({ commit }, url) {
+      const refreshToken = localStorage.getItem('refreshToken')
+    
+      if (!refreshToken) {
+        throw new Error('Refresh token not found')
+      }
+    
+      const response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          refresh: refreshToken,
+        }),
+      })
+    
+      if (response.ok) {
+        const data = await response.json()
+        console.log('Le token a bien été refresh')
+        // mettre à jour le token d'accès dans le store Vuex et dans localStorage
+        commit('setAccessToken',  data.access )
+        return data.access
+      } else {
+        console.log('ca a pas refresh')
+        commit('logout')
+        const error = await response.json()
+        throw new Error(error.detail)
+      }
+    },
+   
     logout({ commit }) {
       commit('logout')
     },
   },
+  
   modules: {},
+ 
 })
+
