@@ -71,7 +71,7 @@ export default createStore({
       commit('setProductsLoading', true)
       url = url || 'http://127.0.0.1:8000/infoproducts/'
       const { data, error } = useFetch(url)
-      //commit('setProducts', data)
+      commit('setProducts', data)
       //commit('setProductsLoading', false)
       return { data, error }
     },
@@ -82,7 +82,7 @@ export default createStore({
         `http://127.0.0.1:8000/infoproduct/${id}/`
       )
       
-      //commit('setCurrentProduct', data)
+      commit('setCurrentProduct', data)
       //commit('setCurrentProductLoading', false)
       return { data, error }
     },

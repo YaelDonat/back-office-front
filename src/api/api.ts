@@ -20,7 +20,6 @@ export function useFetch(url: string) {
       .then(res => {
         if (!res.ok) {
           store.dispatch('refreshAccessToken').then(() => {
-            store.commit('setProducts', data)
             store.commit('setProductsLoading', false)
             console.log('ca a été rafraichi')
             useFetch(url)
@@ -29,7 +28,6 @@ export function useFetch(url: string) {
 
           console.log(error)
         }
-        store.commit('setProducts', data)
         store.commit('setProductsLoading', false)
         console.log('test')
         return res.json()

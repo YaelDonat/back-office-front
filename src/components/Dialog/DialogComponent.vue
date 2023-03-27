@@ -24,7 +24,15 @@
       </div>
       <div class="form-input">
         <label class="form-label">Category</label>
-        <InputText
+        <InputNumber
+          mode="decimal"
+          showButtons
+          decrementButtonclass="p-button-danger"
+          incrementButtonclass="p-button-success"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
+          :min="0"
+          :max="2"
           id="category"
           type="text"
           class="w-full"
@@ -35,8 +43,14 @@
       <div class="form-input">
         <label class="form-label">Price</label>
         <InputNumber
+          :step="0.25"
+          showButtons
           v-model="price"
           inputId="currencyFr"
+          decrementButtonclass="p-button-danger"
+          incrementButtonclass="p-button-success"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
           :minFractionDigits="2"
           :maxFractionDigits="5"
           mode="currency"
@@ -60,6 +74,9 @@
           v-model="localProduct.unit"
           required
         />
+        <small class="p-error" id="unit-error">{{
+          unitErrorMessage || '&nbsp;'
+        }}</small>
       </div>
       <div class="form-input">
         <label class="form-label">Availability</label>
@@ -169,6 +186,12 @@ const { value: price, errorMessage: priceErrorMessage } = useField(
   { initialValue: localProduct.value.price }
 )
 
+const { value: unit, errorMessage: unitErrorMessage } = useField(
+  'unit',
+  validateUnit,
+  { initialValue: localProduct.value.unit }
+)
+
 function validateName(value) {
   if (!value) {
     return 'Name - Surname is required.'
@@ -186,13 +209,24 @@ function validatePrice(value) {
   return true
 }
 
+function validateUnit(value) {
+  if (!value) {
+    return 'Unit is required.'
+  }
+  return true
+}
 const toast = useToast()
 const onSubmit = handleSubmit(values => {
-  if (values.name && values.name.length > 0 && values.price != null) {
+  if (
+    values.name &&
+    values.name.length > 0 &&
+    values.price != null &&
+    values.unit.length > 0
+  ) {
     toast.add({
       severity: 'info',
       summary: 'Form Submitted',
-      detail: `${values.name} - ${values.price}`,
+      detail: `${values.name} - ${values.price} - ${values.unit}`,
       life: 3000,
     })
     try {
