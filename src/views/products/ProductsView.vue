@@ -29,24 +29,13 @@
   </div>
 </template>
 
-<script>
-import { defineComponent } from 'vue'
+<script setup>
 import store from '../../store'
 import { computed } from 'vue'
 import cardComponent from '../../components/cards/cardComponent'
 
-export default defineComponent({
-  name: 'ProductsView',
-  components: { cardComponent },
-  setup() {
-    const products = computed(() => store.state.products)
-    store.dispatch('getProducts')
-
-    return {
-      products,
-    }
-  },
-})
+const products = computed(() => store.state.products)
+store.dispatch('getProducts')
 </script>
 
 <style>

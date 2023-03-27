@@ -19,11 +19,14 @@ import Inplace from 'primevue/inplace'
 import Dialog from 'primevue/dialog'
 import Skeleton from 'primevue/skeleton'
 import InputNumber from 'primevue/inputnumber'
+import Toast from 'primevue/toast'
+import ToastService from 'primevue/toastservice'
 
 const app = createApp(App)
 app.use(store)
 app.use(router)
 app.use(PrimeVue)
+app.use(ToastService)
 
 app.component('Menubar', Menubar)
 app.component('Card', Card)
@@ -35,5 +38,6 @@ app.component('AutoComplete', AutoComplete)
 app.component('Inplace', Inplace)
 app.component('Dialog', Dialog)
 app.component('Skeleton', Skeleton)
+app.component('Toast', Toast)
 
 app.mount('#app')
