@@ -15,47 +15,35 @@
         </p>
       </template>
       <template #footer>
-        <router-link
-          style="text-decoration: none; color: inherit"
-          v-if="id && pathname === 'products'"
-          :to="{ name: 'product', params: { id: id } }"
-        >
+        <div style="display: flex; justify-content: center">
           <Button
-            v-if="btn"
-            icon="pi pi-eye"
-            label="Détails"
-            severity="primary"
+            icon="pi pi-plus"
+            aria-label="Filter"
+            text
+            @click="
+              () => {
+                add()
+              }
+            "
           />
-        </router-link>
-        <Button
-          v-if="pathname === 'products-edit'"
-          icon="pi pi-pencil"
-          label="edit"
-          severity="primary"
-          @click="openDialog()"
-        />
-        <router-link
-          style="text-decoration: none; color: inherit"
-          v-if="id && pathname === 'products'"
-          :to="{ name: 'products-edit' }"
-        >
+          <Tag v-if="availability" value="success" severity="success">
+            In stocks : {{ quantity }}
+          </Tag>
+
+          <Tag v-else value="danger" severity="danger"> Out of stocks </Tag>
+
           <Button
-            icon="pi pi-pencil"
-            severity="primary"
-            style="margin-left: 0.5em"
+            icon="pi pi-minus"
+            severity="danger"
+            text
+            aria-label="Filter"
+            @click="
+              () => {
+                substract()
+              }
+            "
           />
-        </router-link>
-        <Tag
-          v-if="availability"
-          value="success"
-          style="margin-left: 0.5em"
-          severity="success"
-        >
-          In stocks
-        </Tag>
-        <Tag v-else value="danger" style="margin-left: 0.5em" severity="danger">
-          Out of stocks
-        </Tag>
+        </div>
       </template>
     </Card>
     <!-- DIALOG -->
@@ -83,6 +71,7 @@ const props = defineProps({
   availability: { type: Boolean },
   btn: { type: Boolean },
   product: { type: Object },
+  quantity: { type: Number },
 })
 const route = useRoute()
 const router = useRouter()
@@ -107,7 +96,24 @@ watch(
     }
   }
 )
-
+function add() {
+  const payload = {
+    id: props.product.id,
+    unite: 1,
+    update: 'incrementStock',
+  }
+  store.dispatch('updateStock', payload)
+  console.log('incremente')
+}
+function substract() {
+  const payload = {
+    id: props.product.id,
+    unite: 1,
+    update: 'decrementStock',
+  }
+  store.dispatch('updateStock', payload)
+  console.log('decremente')
+}
 function openDialog() {
   visible.value = true
 }

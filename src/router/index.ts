@@ -40,7 +40,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requireAuth && !store.state.user.token.accessToken) {
+  if (to.meta.requireAuth && !store.state.user.token.refreshToken) {
     next({ name: 'login' })
   } else if (store.state.user.token.accessToken && to.meta.isGuest) {
     next({ name: 'home' })

@@ -130,7 +130,50 @@ export default createStore({
         }
       })
     },
-    
+
+    updateStock({ commit }, { id, unite, update}) {
+      // eslint-disable-next-line no-async-promise-executor
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:8000/${update}/${id}/${unite}/`,
+            {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+              },
+              
+            }
+          )
+
+          if (response.ok) {
+            // Update the product information in the store
+            const data = await response.json()
+            
+            commit('setCurrentProduct', data)
+            resolve({ data })
+          } else {
+            // Handle the error
+            
+            this.dispatch('refreshAccessToken').then(() => {
+              console.log('Ca n a pas été incrémenté')
+              this.dispatch('updateStock', {id, unite, update})
+              
+            })
+            .catch(err => {
+              commit('logout')
+              
+            })
+            const error = await response.json()
+            
+            reject(error)
+          }
+        } catch (error) {
+          reject(error)
+        }
+      })
+    },
     async login({ commit }, user) {
       const response = await fetch('http://127.0.0.1:8000/api/token/', {
         method: 'POST',

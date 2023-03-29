@@ -11,6 +11,7 @@
           :availability="product.availability"
           :btn="false"
           :product="product"
+          :quantity="product.quantityInStock"
         />
       </div>
     </main>
