@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import ProductView from '../views/products/ProductView.vue'
 import ProductsView from '../views/products/ProductsView.vue'
+import ProductsTableView from '../views/products/ProductsTableView.vue'
 import LoginView from '../views/auth/LoginView.vue'
 import DefaultLayout from '../layout/DefaultLayout.vue'
 import AuthLayout from '../layout/AuthLayout.vue'
@@ -22,6 +23,11 @@ const routes: Array<RouteRecordRaw> = [
         component: ProductsView,
       },
       { path: '/product/:id', name: 'product', component: ProductView },
+      {
+        path: '/products-table',
+        name: 'products-table',
+        component: ProductsTableView,
+      },
     ],
   },
   {
