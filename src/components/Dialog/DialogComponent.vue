@@ -12,7 +12,7 @@
       <div class="form-input">
         <label class="form-label">Name</label>
         <InputText
-          v-model="name"
+          v-model="localProduct.name"
           id="name"
           type="text"
           class="w-full"
@@ -45,7 +45,7 @@
         <InputNumber
           :step="0.25"
           showButtons
-          v-model="price"
+          v-model="localProduct.price"
           inputId="currencyFr"
           decrementButtonclass="p-button-danger"
           incrementButtonclass="p-button-success"
