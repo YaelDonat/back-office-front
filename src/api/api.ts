@@ -29,7 +29,6 @@ export function useFetch(url: string) {
           console.log(error)
         }
         store.commit('setProductsLoading', false)
-        console.log('test')
         return res.json()
       })
       .then(json => (data.value = json))

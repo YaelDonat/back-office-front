@@ -43,6 +43,11 @@ const items = ref([
         icon: 'pi pi-fw pi-pencil',
         to: { name: 'products-edit' },
       },
+      {
+        label: 'Table',
+        icon: 'pi pi-fw pi-table',
+        to: { name: 'products-table' },
+      },
     ],
   },
   {

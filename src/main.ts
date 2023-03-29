@@ -21,6 +21,10 @@ import Skeleton from 'primevue/skeleton'
 import InputNumber from 'primevue/inputnumber'
 import Toast from 'primevue/toast'
 import ToastService from 'primevue/toastservice'
+import DataTable from 'primevue/datatable'
+import Column from 'primevue/column'
+import ColumnGroup from 'primevue/columngroup' // optional
+import Row from 'primevue/row' // optional
 
 const app = createApp(App)
 app.use(store)
@@ -39,5 +43,9 @@ app.component('Inplace', Inplace)
 app.component('Dialog', Dialog)
 app.component('Skeleton', Skeleton)
 app.component('Toast', Toast)
+app.component('DataTable', DataTable)
+app.component('Column', Column)
+app.component('ColumnGroup', ColumnGroup)
+app.component('Row', Row)
 
 app.mount('#app')
