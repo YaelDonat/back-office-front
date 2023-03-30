@@ -25,12 +25,15 @@ import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import ColumnGroup from 'primevue/columngroup' // optional
 import Row from 'primevue/row' // optional
+import ConfirmDialog from 'primevue/confirmdialog'
+import ConfirmationService from 'primevue/confirmationservice'
 
 const app = createApp(App)
+app.use(ConfirmationService)
+app.use(ToastService)
 app.use(store)
 app.use(router)
 app.use(PrimeVue)
-app.use(ToastService)
 
 app.component('Menubar', Menubar)
 app.component('Card', Card)
@@ -47,5 +50,6 @@ app.component('DataTable', DataTable)
 app.component('Column', Column)
 app.component('ColumnGroup', ColumnGroup)
 app.component('Row', Row)
+app.component('ConfirmDialog', ConfirmDialog)
 
 app.mount('#app')
