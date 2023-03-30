@@ -80,8 +80,20 @@
       </div>
       <div class="form-input">
         <label class="form-label">Discount</label>
-        <InputText
-          id="discount"
+        <InputNumber
+          :step="0.25"
+          showButtons
+          inputId="currencyFr"
+          decrementButtonclass="p-button-danger"
+          incrementButtonclass="p-button-success"
+          incrementButtonIcon="pi pi-plus"
+          decrementButtonIcon="pi pi-minus"
+          :minFractionDigits="2"
+          :maxFractionDigits="5"
+          mode="currency"
+          currency="EUR"
+          locale="fr-FR"
+          id="price"
           type="text"
           class="w-full"
           required
@@ -163,7 +175,6 @@ const onSubmit = handleSubmit(values => {
     life: 3000,
   })
   this.visible = false
-  window.location.reload()
 })
 //Vee VALIDATE
 </script>

@@ -8,7 +8,7 @@
           :price="product.price"
           :subtitle="product.discount"
           :content="product.comments"
-          :id="product.id"
+          :id="product.tig_id"
           :availability="product.availability"
           :sale="product.sale"
           :btn="false"

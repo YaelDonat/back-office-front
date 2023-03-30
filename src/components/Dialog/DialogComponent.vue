@@ -80,26 +80,6 @@
         }}</small>
       </div>
       <div class="form-input">
-        <label class="form-label">Availability</label>
-        <InputText
-          id="availability"
-          type="text"
-          class="w-full"
-          v-model="localProduct.availability"
-          required
-        />
-      </div>
-      <div class="form-input">
-        <label class="form-label">Sale</label>
-        <InputText
-          id="sale"
-          type="text"
-          class="w-full"
-          v-model="localProduct.sale"
-          required
-        />
-      </div>
-      <div class="form-input">
         <label class="form-label">Discount</label>
         <InputText
           id="discount"
@@ -116,15 +96,6 @@
           type="text"
           class="w-full"
           v-model="localProduct.comments"
-        />
-      </div>
-      <div class="form-input">
-        <label class="form-label">Owner</label>
-        <InputText
-          id="owner"
-          type="text"
-          class="w-full"
-          v-model="localProduct.owner"
         />
       </div>
     </form>

@@ -199,6 +199,7 @@ export default createStore({
             console.log('Product added successfully!')
             commit('setCurrentProduct', data)
             resolve({ data })
+            window.location.reload()
           } else {
             // Handle the error
             if (response.status === 401){

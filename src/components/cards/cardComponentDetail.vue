@@ -51,7 +51,7 @@
               severity="danger"
               text
               aria-label="Filter"
-              @click="subtract"
+              @click="substract"
             />
           </div>
           <div class="salebutton">

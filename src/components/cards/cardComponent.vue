@@ -1,4 +1,6 @@
 <template :key="pathname">
+  <Toast />
+  <ConfirmDialog></ConfirmDialog>
   <div class="card">
     <Card style="width: 25em">
       <template #header> {{ header }}</template>
@@ -27,6 +29,13 @@
             severity="primary"
           />
         </router-link>
+        <Button
+          v-if="pathname === 'products'"
+          severity="danger"
+          icon="pi pi-trash"
+          @click="deleteProduct(id)"
+          style="margin-left: 0.5rem"
+        ></Button>
         <Button
           v-if="pathname === 'products-edit'"
           icon="pi pi-pencil"
@@ -73,6 +82,11 @@ import { useRoute, useRouter } from 'vue-router'
 import { ref, watch, defineProps } from 'vue'
 import DialogComponent from '../Dialog/DialogComponent'
 import store from '../../store'
+import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from 'primevue/usetoast'
+
+const confirm = useConfirm()
+const toast = useToast()
 
 const props = defineProps({
   id: { type: Number },
@@ -99,6 +113,32 @@ watch(pathname, (newValue, oldValue) => {
   pathname.value = newValue
 })
 
+const deleteProduct = productId => {
+  //delete methode here
+  confirm.require({
+    message: 'Are you sure you want to delete this product?',
+    header: 'Confirmation',
+    icon: 'pi pi-exclamation-triangle',
+    accept: () => {
+      store.dispatch('deleteProduct', productId)
+      toast.add({
+        severity: 'info',
+        summary: 'Confirmed',
+        detail: 'You have accepted to delete this product',
+        life: 3000,
+      })
+      window.location.reload()
+    },
+    reject: () => {
+      toast.add({
+        severity: 'error',
+        summary: 'Rejected',
+        detail: 'You have rejected to delete this product',
+        life: 3000,
+      })
+    },
+  })
+}
 // Observer le changement de la propriété 'id' de l'objet route.params
 /*watch(
   () => route.params.id,
