@@ -103,6 +103,10 @@
             </Inplace>
           </template>
         </Column>
+        <template #footer>
+          In total there are
+          {{ products.data ? products.data.length : 0 }} products.
+        </template>
       </DataTable>
     </main>
   </div>
