@@ -103,6 +103,13 @@
             </Inplace>
           </template>
         </Column>
+        <Column field="delete" header="Delete" style="width: min-content">
+          <template #body="slotProps">
+            <Button severity="danger" @click="deleteProduct(slotProps.data.id)"
+              >Delete</Button
+            >
+          </template>
+        </Column>
         <template #footer>
           In total there are
           {{ products.data ? products.data.length : 0 }} products.
@@ -120,6 +127,10 @@ const products = computed(() => store.state.products)
 const productsArray = ref([])
 // const productsDiscount = ref([])
 let discountPercent = null
+
+const deleteProduct = productId => {
+  //delete methode here
+}
 
 const addProduct = data => {
   // console.log('data', data)
