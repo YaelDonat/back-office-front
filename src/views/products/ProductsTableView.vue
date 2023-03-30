@@ -130,6 +130,7 @@ let discountPercent = null
 
 const deleteProduct = productId => {
   //delete methode here
+  store.dispatch('deleteProduct', productId)
 }
 
 const addProduct = data => {

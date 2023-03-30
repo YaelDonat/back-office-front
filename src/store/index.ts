@@ -132,6 +132,51 @@ export default createStore({
       })
     },
 
+    deleteProduct({ commit }, id) {
+      // eslint-disable-next-line no-async-promise-executor
+      return new Promise(async (resolve, reject) => {
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:8000/infoproduct/${id}/`,
+            {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+              },
+              
+            }
+          )
+
+          if (response.ok) {
+            // Update the product information in the store
+            const data = await response.json()
+            console.log('Product deleted successfully!')
+            commit('setCurrentProduct', data)
+            resolve({ data })
+          } else {
+            // Handle the error
+            if (response.status === 401){
+              this.dispatch('refreshAccessToken').then(() => {
+                console.log('ca a été rafraichi')
+                this.dispatch('deleteProduct', id)
+                
+              })
+              .catch(err => {
+                commit('logout')
+                
+              })
+            }
+            const error = await response.json()
+            
+            reject(error)
+          }
+        } catch (error) {
+          reject(error)
+        }
+      })
+    },
+
     updateStock({ commit }, { id, unite, update}) {
       // eslint-disable-next-line no-async-promise-executor
       return new Promise(async (resolve, reject) => {
