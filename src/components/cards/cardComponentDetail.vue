@@ -1,48 +1,96 @@
 <template :key="pathname">
   <div class="card">
-    <Card style="width: 25em">
+    <Card style="width: max-content">
       <template #header> {{ header }}</template>
-      <template #title> {{ title }} </template>
+      <template #title>
+        <div v-if="subtitle > 0">{{ name }} - {{ subtitle }}€</div>
+        <div v-else>{{ name }} - {{ price }}€</div>
+      </template>
       <template #subtitle v-if="subtitle > 0">
-        {{ subtitle }} % de réduction sur cet article !!
+        {{ percent(subtitle, price) }}% de réduction sur cet article !!
       </template>
       <template #content>
-        <p v-if="content">
-          {{ content }}
-        </p>
-        <p v-else>
-          Il n'y a pas de descriptions sur ce produit pour l'instant.
-        </p>
+        <div style="margin-bottom: -40px">
+          <p v-if="content">
+            {{ content }}
+          </p>
+          <p v-else>
+            Il n'y a pas de descriptions sur ce produit pour l'instant.
+          </p>
+        </div>
       </template>
       <template #footer>
-        <div style="display: flex; justify-content: center">
-          <Button
-            icon="pi pi-plus"
-            aria-label="Filter"
-            text
-            @click="
-              () => {
-                add()
-              }
-            "
-          />
-          <Tag v-if="availability" value="success" severity="success">
-            In stocks : {{ quantity }}
-          </Tag>
+        <div
+          style="
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          "
+        >
+          <div class="quantitybutton" style="margin-bottom: 10px">
+            <Button icon="pi pi-plus" aria-label="Filter" text @click="add" />
+            <Tag
+              v-if="availability"
+              value="success"
+              severity="success"
+              style="font-size: 16px; padding: 6px 12px; margin: 0px 5px"
+            >
+              In stock: {{ quantity }}
+            </Tag>
+            <Tag
+              v-else
+              value="danger"
+              severity="danger"
+              style="font-size: 16px; padding: 6px 12px; margin: 0px 5px"
+            >
+              Out of stock
+            </Tag>
+            <Button
+              icon="pi pi-minus"
+              severity="danger"
+              text
+              aria-label="Filter"
+              @click="subtract"
+            />
+          </div>
+          <div class="salebutton">
+            <Button
+              value="success"
+              severity="success"
+              style="font-size: 16px; padding: 6px 12px; margin: 0px 5px"
+              @click="addDiscount"
+            >
+              Add discount
+            </Button>
+            <InputText
+              v-if="subtitle > 0"
+              v-model.number="unite"
+              class="p-mr-2"
+              :style="{
+                'font-size': '16px',
+                padding: '6px 12px',
+                margin: '0px 8px',
+              }"
+              :class="{ 'p-invalid': subtitle < 0 }"
+              placeholder="Subtitle"
+              type="number"
+              min="0"
+              max="100"
+              step="1"
+            />
+            <span style="margin-right: 5px" v-if="subtitle > 0">%</span>
 
-          <Tag v-else value="danger" severity="danger"> Out of stocks </Tag>
-
-          <Button
-            icon="pi pi-minus"
-            severity="danger"
-            text
-            aria-label="Filter"
-            @click="
-              () => {
-                substract()
-              }
-            "
-          />
+            <Button
+              v-if="subtitle > 0"
+              value="danger"
+              severity="danger"
+              style="font-size: 16px; padding: 6px 12px; margin: 0px 5px"
+              @click="removeSale"
+            >
+              Remove sale
+            </Button>
+          </div>
         </div>
       </template>
     </Card>
@@ -65,10 +113,12 @@ import store from '../../store'
 const props = defineProps({
   id: { type: Number },
   header: { type: String },
-  title: { type: String },
+  name: { type: String },
+  price: { type: Number },
   subtitle: { type: String },
   content: { type: String },
   availability: { type: Boolean },
+  sale: { type: Boolean },
   btn: { type: Boolean },
   product: { type: Object },
   quantity: { type: Number },
@@ -76,7 +126,7 @@ const props = defineProps({
 const route = useRoute()
 const router = useRouter()
 const visible = ref(false)
-
+const unite = ref(props.subtitle)
 let pathname = ref(route.name)
 
 router.afterEach((to, from) => {
@@ -96,6 +146,9 @@ watch(
     }
   }
 )
+function percent(price, discount) {
+  return Math.round(100 - (price / discount) * 100)
+}
 function add() {
   const payload = {
     id: props.product.id,
@@ -104,6 +157,23 @@ function add() {
   }
   store.dispatch('updateStock', payload)
   console.log('incremente')
+}
+function removeSale() {
+  store.dispatch('removeSale', props.product.id)
+  console.log('removeSale')
+}
+function addDiscount() {
+  const payload = {
+    id: props.product.id,
+    unite: Math.round(unite.value),
+    update: 'putonsale',
+  }
+  if (unite.value < 1) {
+    payload.unite = 10
+  }
+
+  store.dispatch('updateStock', payload)
+  console.log('addDiscount ' + Math.round(payload.unite))
 }
 function substract() {
   const payload = {

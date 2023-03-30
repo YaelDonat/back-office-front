@@ -4,7 +4,7 @@
       <template #header> {{ header }}</template>
       <template #title> {{ title }} </template>
       <template #subtitle v-if="subtitle > 0">
-        {{ subtitle }} % de réduction sur cet article !!
+        {{ percent(subtitle, price) }}% de réduction sur cet article !!
       </template>
       <template #content>
         <p v-if="content">
@@ -78,6 +78,7 @@ const props = defineProps({
   id: { type: Number },
   header: { type: String },
   title: { type: String },
+  price: { type: Number },
   subtitle: { type: String },
   content: { type: String },
   availability: { type: Boolean },
@@ -107,7 +108,9 @@ watch(pathname, (newValue, oldValue) => {
     }
   }
 )*/
-
+function percent(price, discount) {
+  return Math.round(100 - (price / discount) * 100)
+}
 function openDialog() {
   visible.value = true
 }

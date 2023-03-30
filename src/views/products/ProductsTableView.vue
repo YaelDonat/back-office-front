@@ -12,6 +12,7 @@
         <template #header>
           <div class="data-header">
             <span class="header-title">Products</span>
+            <Button label="Update All" @click="updateAllProducts" />
           </div>
         </template>
         <Column field="id" header="Id" sortable style="width: 25%"></Column>
@@ -75,14 +76,42 @@ const products = computed(() => store.state.products)
 const sendDiscount = data => {
   console.table(data)
   console.log('discount: ', data.discount)
-  // Envoyer la requête avec la valeur de data.discount
+
+  const payload = {
+    id: data.id,
+    unite: Math.round(data.discount),
+    update: 'putonsale',
+  }
+  if (data.discount == 0) {
+    store.dispatch('removeSale', payload.id)
+    console.log('remove from sale')
+  } else {
+    store.dispatch('updateStock', payload)
+    console.log('addDiscount ' + Math.round(payload.unite))
+  }
 }
 
 const sendQuantityInStock = data => {
   console.log('quantityInStock: ', data.quantityInStock)
   // Envoyer la requête avec la valeur de data.quantityInStock
+  const payload = {
+    id: data.id,
+    unite: Math.round(data.quantityInStock),
+    update: 'updateStock',
+  }
+
+  store.dispatch('updateStock', payload)
+  console.log('Product quantity updated !')
 }
 
+const updateAllProducts = () => {
+  for (const id in products.value) {
+    const product = products.value[id]
+    sendQuantityInStock(product)
+    sendDiscount(product)
+  }
+}
+console.log('produits: ', products.value.data)
 store.dispatch('getProducts')
 </script>
 

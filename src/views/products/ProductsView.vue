@@ -16,6 +16,7 @@
         >
           <cardComponent
             :title="product.name + ' - ' + product.price + '€'"
+            :price="product.price"
             :subtitle="product.discount"
             :content="product.comments"
             :id="product.tig_id"

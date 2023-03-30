@@ -4,11 +4,13 @@
       <div class="card-item-product">
         <cardComponentDetail
           v-if="product"
-          :title="product.name + ' - ' + product.price + '€'"
+          :name="product.name"
+          :price="product.price"
           :subtitle="product.discount"
           :content="product.comments"
           :id="product.id"
           :availability="product.availability"
+          :sale="product.sale"
           :btn="false"
           :product="product"
           :quantity="product.quantityInStock"
