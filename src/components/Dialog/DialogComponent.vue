@@ -232,7 +232,7 @@ const onSubmit = handleSubmit(values => {
     })
     try {
       const payload = {
-        id: props.product.id,
+        id: props.product.tig_id,
         product: localProduct.value,
       }
 

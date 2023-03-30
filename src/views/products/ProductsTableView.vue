@@ -107,7 +107,9 @@
         </Column>
         <Column field="delete" header="Delete" style="width: min-content">
           <template #body="slotProps">
-            <Button severity="danger" @click="deleteProduct(slotProps.data.id)"
+            <Button
+              severity="danger"
+              @click="deleteProduct(slotProps.data.tig_id)"
               >Delete</Button
             >
           </template>

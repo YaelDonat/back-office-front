@@ -158,6 +158,7 @@ const onSubmit = handleSubmit(values => {
   store.dispatch('addProduct', localProduct.value)
   console.log('Product saved successfully!')
   this.visible = false
+  window.location.reload()
 })
 //Vee VALIDATE
 </script>
