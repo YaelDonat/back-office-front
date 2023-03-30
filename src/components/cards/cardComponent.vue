@@ -12,9 +12,7 @@
         <p v-if="content">
           {{ content }}
         </p>
-        <p v-else>
-          Il n'y a pas de descriptions sur ce produit pour l'instant.
-        </p>
+        <p v-else>Il n'y a pas de descriptions sur ce produit pour l'instant</p>
       </template>
       <template #footer>
         <router-link
