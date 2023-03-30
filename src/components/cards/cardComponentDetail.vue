@@ -126,9 +126,14 @@ const props = defineProps({
 const route = useRoute()
 const router = useRouter()
 const visible = ref(false)
-const unite = ref(props.subtitle)
-let pathname = ref(route.name)
+let unite = ref(props.subtitle)
+if (props.product.discount > 0) {
+  unite = ref(percent(props.subtitle, props.price))
+}
 
+let pathname = ref(route.name)
+console.log(unite)
+console.log(unite.value)
 router.afterEach((to, from) => {
   pathname.value = to.name
 })

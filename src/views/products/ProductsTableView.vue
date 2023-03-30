@@ -105,13 +105,12 @@ const sendQuantityInStock = data => {
 }
 
 const updateAllProducts = () => {
-  for (const id in products.value) {
-    const product = products.value[id]
+  products.value.forEach(product => {
     sendQuantityInStock(product)
     sendDiscount(product)
-  }
+  })
 }
-console.log('produits: ', products.value.data)
+console.log('produits' + store.state.products.val)
 store.dispatch('getProducts')
 </script>
 

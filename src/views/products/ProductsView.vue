@@ -8,22 +8,33 @@
         class="mb-2"
         style="margin-top: 2rem"
       ></Skeleton>
-      <div v-else class="list-item">
-        <div
-          class="card-item-product"
-          v-for="product in products.data"
-          :key="product.id"
+      <div v-else>
+        <Button
+          icon="pi pi-file"
+          label="edit"
+          severity="primary"
+          style="margin: 2rem 5rem"
+          @click="openDialog()"
         >
-          <cardComponent
-            :title="product.name + ' - ' + product.price + '€'"
-            :price="product.price"
-            :subtitle="product.discount"
-            :content="product.comments"
-            :id="product.tig_id"
-            :availability="product.availability"
-            :btn="true"
-            :product="product"
-          />
+          Ajouter un produit
+        </Button>
+        <div class="list-item">
+          <div
+            class="card-item-product"
+            v-for="product in products.data"
+            :key="product.id"
+          >
+            <cardComponent
+              :title="product.name + ' - ' + product.price + '€'"
+              :price="product.price"
+              :subtitle="product.discount"
+              :content="product.comments"
+              :id="product.tig_id"
+              :availability="product.availability"
+              :btn="true"
+              :product="product"
+            />
+          </div>
         </div>
       </div>
     </main>
@@ -33,10 +44,15 @@
 <script setup>
 import store from '../../store'
 import { computed } from 'vue'
+import { ref, watch, defineProps } from 'vue'
 import cardComponent from '../../components/cards/cardComponent'
 
+const visible = ref(false)
 const products = computed(() => store.state.products)
 store.dispatch('getProducts')
+function openDialog() {
+  visible.value = true
+}
 </script>
 
 <style>

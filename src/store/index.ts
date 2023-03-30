@@ -111,16 +111,17 @@ export default createStore({
             resolve({ data })
           } else {
             // Handle the error
-            
-            this.dispatch('refreshAccessToken').then(() => {
-              console.log('ca a été rafraichi')
-              this.dispatch('saveProduct', {id, product})
-              
-            })
-            .catch(err => {
-              commit('logout')
-              
-            })
+            if (response.status === 401){
+              this.dispatch('refreshAccessToken').then(() => {
+                console.log('ca a été rafraichi')
+                this.dispatch('saveProduct', {id, product})
+                
+              })
+              .catch(err => {
+                commit('logout')
+                
+              })
+            }
             const error = await response.json()
             
             reject(error)
@@ -155,7 +156,7 @@ export default createStore({
             resolve({ data })
           } else {
             // Handle the error
-            
+            if(response.status === 401){
             this.dispatch('refreshAccessToken').then(() => {
               console.log('Ca n a pas été incrémenté')
               this.dispatch('updateStock', {id, unite, update})
@@ -165,6 +166,7 @@ export default createStore({
               commit('logout')
               
             })
+          }
             const error = await response.json()
             
             reject(error)
