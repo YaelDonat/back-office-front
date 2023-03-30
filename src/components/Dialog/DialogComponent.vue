@@ -1,9 +1,10 @@
 <template>
+  <Toast></Toast>
   <Dialog
     :visible="visible"
     @update:visible="value => $emit('close', value)"
     modal
-    header="Edit form"
+    header="Edit Product"
     :style="{ width: '50vw' }"
     @hide="onClose"
   >
@@ -225,7 +226,7 @@ const onSubmit = handleSubmit(values => {
   ) {
     toast.add({
       severity: 'info',
-      summary: 'Form Submitted',
+      summary: 'Product Edited',
       detail: `${values.name} - ${values.price} - ${values.unit}`,
       life: 3000,
     })

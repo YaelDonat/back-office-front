@@ -1,5 +1,7 @@
 <template>
   <div class="home">
+    <Toast />
+    <ConfirmDialog></ConfirmDialog>
     <main style="margin-top: 2rem">
       <DataTable
         :value="products.data"
@@ -122,6 +124,11 @@
 <script setup>
 import store from '../../store'
 import { computed, ref } from 'vue'
+import { useConfirm } from 'primevue/useconfirm'
+import { useToast } from 'primevue/usetoast'
+
+const confirm = useConfirm()
+const toast = useToast()
 
 const products = computed(() => store.state.products)
 const productsArray = ref([])
@@ -130,7 +137,29 @@ let discountPercent = null
 
 const deleteProduct = productId => {
   //delete methode here
-  store.dispatch('deleteProduct', productId)
+  confirm.require({
+    message: 'Are you sure you want to delete this product?',
+    header: 'Confirmation',
+    icon: 'pi pi-exclamation-triangle',
+    accept: () => {
+      store.dispatch('deleteProduct', productId)
+      toast.add({
+        severity: 'info',
+        summary: 'Confirmed',
+        detail: 'You have accepted to delete this product',
+        life: 3000,
+      })
+      window.location.reload()
+    },
+    reject: () => {
+      toast.add({
+        severity: 'error',
+        summary: 'Rejected',
+        detail: 'You have rejected to delete this product',
+        life: 3000,
+      })
+    },
+  })
 }
 
 const addProduct = data => {
