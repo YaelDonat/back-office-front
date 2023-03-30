@@ -35,6 +35,11 @@
               :product="product"
             />
           </div>
+          <DialogComponentAdd
+            :visible="visible"
+            :onClose="closeDialog"
+            :product="product"
+          />
         </div>
       </div>
     </main>
@@ -45,6 +50,7 @@
 import store from '../../store'
 import { computed } from 'vue'
 import { ref, watch, defineProps } from 'vue'
+import DialogComponentAdd from '../../components/Dialog/DialogComponentAdd'
 import cardComponent from '../../components/cards/cardComponent'
 
 const visible = ref(false)
@@ -52,6 +58,9 @@ const products = computed(() => store.state.products)
 store.dispatch('getProducts')
 function openDialog() {
   visible.value = true
+}
+function closeDialog() {
+  visible.value = false
 }
 </script>
 
