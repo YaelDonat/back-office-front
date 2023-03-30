@@ -156,7 +156,12 @@ const { handleSubmit, resetForm } = useForm()
 const toast = useToast()
 const onSubmit = handleSubmit(values => {
   store.dispatch('addProduct', localProduct.value)
-  console.log('Product saved successfully!')
+  toast.add({
+    severity: 'success',
+    summary: 'Created !',
+    detail: 'Product created successfully!',
+    life: 3000,
+  })
   this.visible = false
   window.location.reload()
 })
